@@ -46,7 +46,7 @@ class MainController(val utilisateurDao: UtilisateurDao, val roleDao: RoleDao, v
      * @param model Le modèle Spring utilisé pour passer des données à la vue Thymeleaf.
      * @return Le nom de la vue Thymeleaf à afficher pour la page d'inscription.
      */
-    @GetMapping("/inscription")
+    /*@GetMapping("/inscription")
     fun inscription(model: Model): String {
         // Crée un nouvel utilisateur avec des valeurs par défaut et l'ajoute au modèle
         val utilisateur = Utilisateur(null, "", "")
@@ -116,5 +116,5 @@ class MainController(val utilisateurDao: UtilisateurDao, val roleDao: RoleDao, v
             return "redirect:/login"
         }
     }
-
+*/
 }

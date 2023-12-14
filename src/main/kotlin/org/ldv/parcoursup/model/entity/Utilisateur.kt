@@ -26,7 +26,11 @@ class Utilisateur constructor(
 
     // Mot de passe de l'utilisateur
     var mdp:String,
-
+    var numDossier:String,
+    var nom:String,
+    var prenom:String,
+    var codeSecret:String,
+    var estVictime:Boolean,
     // Liste des rôles associés à l'utilisateur
     @ManyToMany
     @JoinTable(

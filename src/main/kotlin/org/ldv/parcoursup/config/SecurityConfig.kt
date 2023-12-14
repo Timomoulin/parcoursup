@@ -56,7 +56,7 @@ class SecurityConfig {
             .authorizeHttpRequests { auth ->
                 auth
                     // Autoriser l'accès public à certaines URL
-                    .requestMatchers("/accueil", "/inscription", "/webjars/**", "/login", "/css/**", "/js/**", "/img/**", "/favicon.ico").permitAll()
+                    .requestMatchers("/h2-console/**","/accueil", "/inscription", "/webjars/**", "/login", "/css/**", "/js/**", "/img/**", "/favicon.ico").permitAll()
                     // Autoriser l'accès pour les utilisateurs avec le rôle "admin" à /admin/**
                     .requestMatchers("/admin/**").hasAuthority("admin")
                     // Autoriser l'accès pour les utilisateurs avec le rôle "joueur" à /joueur/**

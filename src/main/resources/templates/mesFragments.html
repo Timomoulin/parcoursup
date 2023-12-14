@@ -7,17 +7,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Spring Boot Aventure</title>
     <!-- Bootstrap -->
-    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"
-          rel="stylesheet">
-    <script src="/webjars/bootstrap/js/bootstrap.bundle.js"
-            th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"
-            crossorigin="anonymous">
-    </script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </head>
 <body>
 <nav th:fragment="fragNav" class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">Kotlin Aventure</a>
+        <a class="navbar-brand" href="#">ParcourSup</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
                 aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -28,10 +24,6 @@
                     <a class="nav-link active" aria-current="page" href="/accueil">Accueil</a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="/inscription">Inscription</a>
-                </li>
-
                 <li sec:authorize="hasAuthority('admin')" class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                        aria-expanded="false">
@@ -39,20 +31,13 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" th:href="@{'/admin/qualite'}">Dashboard qualite</a></li>
-                        <li><a class="dropdown-item" th:href="@{'/admin/typeArme'}">Dashboard type arme</a></li>
-                        <li><a class="dropdown-item" th:href="@{'/admin/typeArmure'}">Dashboard type armure</a></li>
-                        <li><a class="dropdown-item" th:href="@{'/admin/typeAccessoire'}">Dashboard type accessoire</a></li>
-                        <li><a class="dropdown-item" th:href="@{'/admin/arme'}">Dashboard arme</a></li>
-                        <li><a class="dropdown-item" th:href="@{'/admin/armure'}">Dashboard armure</a></li>
-                        <li><a class="dropdown-item" th:href="@{'/admin/accessoire'}">Dashboard accessoire</a></li>
-                        <li><a class="dropdown-item" th:href="@{'/admin/potion'}">Dashboard potion</a></li>
-                        <li><a class="dropdown-item" th:href="@{'/admin/bombe'}">Dashboard potion</a></li>
+
                     </ul>
                 </li>
-                <li sec:authorize="hasAuthority('joueur')" class="nav-item dropdown">
+                <li sec:authorize="hasAuthority('etudiant')" class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                        aria-expanded="false">
-                        Joueur
+                        Etudiant
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" th:href="@{'/joueur/campagne'}">Mes campagnes</a></li>

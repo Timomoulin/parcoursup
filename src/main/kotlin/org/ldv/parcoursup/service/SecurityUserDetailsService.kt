@@ -35,9 +35,11 @@ class SecurityUserDetailsService constructor(
     override fun loadUserByUsername(username: String): UserDetails {
 
         // Récupérer l'utilisateur depuis la base de données en utilisant le nom d'utilisateur (pseudo ou email)
-        val utilisateur: Utilisateur = utilisateurDao.findByEmail(username)
-            ?: throw UsernameNotFoundException("Utilisateur non trouvé $username")
-
+        val utilisateurs= this.utilisateurDao.findAll()
+        val utilisateur = utilisateurs.find { it.email==username || it.numDossier==username }
+        if( utilisateur==null){
+            throw UsernameNotFoundException("Utilisateur non trouvé $username")
+        }
         // Créer une liste de permissions (rôles) pour l'utilisateur
         val permissions: MutableSet<GrantedAuthority> = HashSet()
         for (unRole in utilisateur.roles) {
@@ -45,6 +47,6 @@ class SecurityUserDetailsService constructor(
         }
 
         // Retourner un objet User (implémentant UserDetails) avec les détails de l'utilisateur
-        return User(utilisateur.email, utilisateur.mdp, permissions)
+        return User(utilisateur.numDossier ?: utilisateur.email, utilisateur.mdp, permissions)
     }
 }
