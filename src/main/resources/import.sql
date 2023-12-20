@@ -1,4 +1,8 @@
 insert into role (nom) values ('admin');
 insert into role (nom) values ('joueur');
-insert into utilisateur ( email, mdp,est_victime) values ('admin@email.com','$2a$10$MJn5SDUCgsm3XEyvELGQI.lcCzCXtxhA8hunr9jX9yvDd6/FkjxYO',true);
-insert into utilisateur_roles (roles_id, utilisateur_id) VALUES (1,1), (2,1);
+insert into utilisateur ( email, mdp,est_victime) values ('admin@email.com','$2a$10$MJn5SDUCgsm3XEyvELGQI.lcCzCXtxhA8hunr9jX9yvDd6/FkjxYO',false);
+-- mdp = pacoursup2023=super
+insert into utilisateur (est_victime, mdp, nom, num_dossier, prenom) values (false,'$2y$10$MksieoAFllo22OxzzxQHSudksZZJTSFCVogIeTnuT4GGdC6s1M7ha','vigna','050489','edith'),(false,'$2y$10$MksieoAFllo22OxzzxQHSudksZZJTSFCVogIeTnuT4GGdC6s1M7ha','milesi','15892','audrey'),(false,'$2y$10$MksieoAFllo22OxzzxQHSudksZZJTSFCVogIeTnuT4GGdC6s1M7ha','hourdeaux','58924','laurence'),(false,'$2y$10$MksieoAFllo22OxzzxQHSudksZZJTSFCVogIeTnuT4GGdC6s1M7ha','sequier','81547','catherine'),(false,'$2y$10$Hl/YRWK8.WsgLaoFPqSfB.JPHcRSsEzK1U3GCeC.lmUyS/kmDlTQS','bendib','84651','bahija'),(false,'$2y$10$MksieoAFllo22OxzzxQHSudksZZJTSFCVogIeTnuT4GGdC6s1M7ha','jules','87241','laurent'),(false,'$2y$10$MksieoAFllo22OxzzxQHSudksZZJTSFCVogIeTnuT4GGdC6s1M7ha','guillien','62456','yann'),(false,'$2y$10$MksieoAFllo22OxzzxQHSudksZZJTSFCVogIeTnuT4GGdC6s1M7ha','moulin','62456','timothée');
+-- mdp = motdepassehypersecret2023!
+insert into utilisateur (est_victime, code_secret, mdp, nom, num_dossier, prenom) values (true,'mystere1','$2y$10$7oyvjE1esYgl.062Mph8cepT9/hFq5EY2tf5hxBt3b/KZIP2xCITG','fraioli','57721','stephane'),(true,'mystere2','$2y$10$7oyvjE1esYgl.062Mph8cepT9/hFq5EY2tf5hxBt3b/KZIP2xCITG','anelka','22754','francine'),(true,'mystere3','$2y$10$7oyvjE1esYgl.062Mph8cepT9/hFq5EY2tf5hxBt3b/KZIP2xCITG','varni','57721','frédéric');
+insert into utilisateur_roles (roles_id, utilisateur_id) VALUES (1,1), (2,1),(2,2),(2,3),(2,4),(2,5),(2,6),(2,7),(2,8),(2,9),(2,10),(2,11),(2,12);

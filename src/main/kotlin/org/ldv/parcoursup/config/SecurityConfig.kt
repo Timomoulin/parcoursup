@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer
 import org.springframework.security.config.annotation.web.configurers.FormLoginConfigurer
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -19,7 +20,7 @@ class SecurityConfig {
      *         Cette instance sera utilisée pour encoder et décoder les mots de passe de l'application.
      */
     @Bean
-    fun getEncoder(): PasswordEncoder? {
+    fun getEncoder(): BCryptPasswordEncoder {
         // Retourner une instance de BCryptPasswordEncoder pour l'encodage sécurisé des mots de passe
         return BCryptPasswordEncoder()
     }
@@ -37,6 +38,7 @@ class SecurityConfig {
         return httpSecurity
             // Désactiver CSRF pour simplifier la configuration dans cet exemple
             .csrf { csrf: CsrfConfigurer<HttpSecurity> -> csrf.disable() }
+            .headers { frameOptions: HeadersConfigurer<HttpSecurity>->frameOptions.disable() }
 
             // Configuration du formulaire de connexion
             .formLogin { form: FormLoginConfigurer<HttpSecurity?> ->
@@ -56,7 +58,7 @@ class SecurityConfig {
             .authorizeHttpRequests { auth ->
                 auth
                     // Autoriser l'accès public à certaines URL
-                    .requestMatchers("/h2-console/**","/accueil", "/inscription", "/webjars/**", "/login", "/css/**", "/js/**", "/img/**", "/favicon.ico").permitAll()
+                    .requestMatchers("/recupmdp","/h2-console/**","/accueil", "/inscription", "/webjars/**", "/login", "/css/**", "/js/**", "/img/**", "/favicon.ico").permitAll()
                     // Autoriser l'accès pour les utilisateurs avec le rôle "admin" à /admin/**
                     .requestMatchers("/admin/**").hasAuthority("admin")
                     // Autoriser l'accès pour les utilisateurs avec le rôle "joueur" à /joueur/**

@@ -40,7 +40,11 @@ class Utilisateur constructor(
     )
     var roles: MutableList<Role> = mutableListOf()
 ) {
+    @OneToMany(mappedBy = "utilisateur", orphanRemoval = true)
+    open var voeus: MutableList<Voeu> = mutableListOf()
 
+    @OneToMany(mappedBy = "utilisateur", orphanRemoval = true)
+    open var logs: MutableList<Log> = mutableListOf()
 
-    // Vous pouvez ajouter d'autres méthodes ou propriétés au besoin
+// Vous pouvez ajouter d'autres méthodes ou propriétés au besoin
 }
