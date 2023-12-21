@@ -43,7 +43,7 @@ class SecurityConfig {
             // Configuration du formulaire de connexion
             .formLogin { form: FormLoginConfigurer<HttpSecurity?> ->
                 form
-                    .loginPage("/login").defaultSuccessUrl("/accueil",true).failureUrl("/login?error=true")
+                    .loginPage("/login").defaultSuccessUrl("/etudiant/voeu",true).failureUrl("/login?error=true")
                     .permitAll()
             }
 

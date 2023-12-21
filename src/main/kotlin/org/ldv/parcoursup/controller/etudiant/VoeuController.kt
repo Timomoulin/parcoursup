@@ -68,7 +68,7 @@ class VoeuController (val voeuDao: VoeuDao,val etudiantService: EtudiantService)
     @GetMapping("/etudiant/voeu/{id}/edit")
     fun edit(@PathVariable id: Long, model: Model): String {
         val voeu = this.voeuDao.findById(id).orElseThrow()
-        model.addAttribute("voeu", voeu)
+        model.addAttribute("id", id)
         return "etudiant/voeu/edit"
     }
 
