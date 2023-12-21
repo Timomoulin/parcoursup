@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head th:replace="mesFragments :: fragHead">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="min-vh-100">
+    <nav th:replace="mesFragments :: fragNav"></nav>
+    <main class="container">
+        <h1>Mes voeux</h1>
+        <a th:if="${voeux.size<10}" href="/etudiant/voeu/create" class="btn btn-primary">Rechercher une formation et faire un nouveau voeu</a>
+        <table class="table table-striped">
+
+            <thead>
+            <tr>
+                <th>Formation</th>
+                <th>Info</th>
+                <th>Etat</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="unVoeu : ${voeux}">
+                <td>
+                    <b th:text="${unVoeu.formation.etablissement.nom+' ('+unVoeu.formation.etablissement.commune+')'}"></b>
+                    <br>
+                    <div th:text="${unVoeu.formation.filliere}"></div>
+                </td>
+                <td>Dossier complet</td>
+                <td>Clôture des dossiers le 21/12 à 17h</td>
+                <td>
+                    <div class="d-flex">
+                    <a th:href="@{'/etudiant/voeu/'+${unVoeu.id}+'/edit'}" class="btn btn-warning">
+                        Modifier
+                    </a>
+                    <a th:href="@{'/etudiant/voeu/'+${unVoeu.id}}" class="btn btn-primary">
+                        Consulter
+                    </a>
+                    <div>
+                        <form th:action="@{'/etudiant/voeu/delete'}" method="post">
+                            <input type="hidden" name="id" th:value="${unVoeu.id}">
+                            <button class="btn btn-danger">Supprimer</button>
+                        </form>
+                    </div>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+
+        </table>
+        
+    </main>
+</div>
+<footer th:replace="mesFragments :: fragFooter"></footer>
+</body>
+</html>

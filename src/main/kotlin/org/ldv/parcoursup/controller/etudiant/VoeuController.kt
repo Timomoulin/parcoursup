@@ -23,7 +23,8 @@ class VoeuController (val voeuDao: VoeuDao,val etudiantService: EtudiantService)
         val user = etudiantService.getUser(identifiant)
 
         val voeus = this.voeuDao.findByUtilisateur_Id(user?.id!!)
-        model.addAttribute("voeus", voeus)
+        model.addAttribute("user",user)
+        model.addAttribute("voeux", voeus)
         return "etudiant/voeu/index"
     }
 
