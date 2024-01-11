@@ -5,10 +5,11 @@ import org.ldv.parcoursup.model.entity.Formation
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.PageRequest
+import org.springframework.stereotype.Service
 import org.springframework.web.bind.annotation.RequestParam
-
+@Service
 class FormationService (val formationDao: FormationDao) {
-    fun search(@RequestParam formation: String, @RequestParam lieu: String, pageRequest: PageRequest): Page<Formation> {
+    fun search( formation: String,lieu: String, pageRequest: PageRequest): Page<Formation> {
         val decompositionFormation = formation.split(" ")
         val decompositionLieu = lieu.split(",")
 

@@ -5,6 +5,8 @@ import org.ldv.parcoursup.model.dao.VoeuDao
 import org.ldv.parcoursup.model.entity.Utilisateur
 import org.ldv.parcoursup.model.entity.Voeu
 import org.ldv.parcoursup.service.EtudiantService
+import org.ldv.parcoursup.service.FormationService
+import org.springframework.data.domain.PageRequest
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Controller
@@ -13,7 +15,7 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
 
 @Controller
-class VoeuController (val voeuDao: VoeuDao,val etudiantService: EtudiantService) {
+class VoeuController (val formationService: FormationService,val voeuDao: VoeuDao,val voeuService: EtudiantService,val etudiantService: EtudiantService) {
     @GetMapping("/etudiant/voeu")
     fun index(model: Model): String {
         // Récupérer l'objet Principal
@@ -45,7 +47,9 @@ class VoeuController (val voeuDao: VoeuDao,val etudiantService: EtudiantService)
     }
 
     @GetMapping("/etudiant/voeu/create")
-    fun create(model: Model): String {
+    fun create(@RequestParam formation: String?,@RequestParam lieu: String?, pageRequest: PageRequest, model: Model): String {
+       val laFormation= formation ?: ""
+        val leLieu= lieu ?: ""
         // Récupérer l'objet Principal
         val authentication: Authentication = SecurityContextHolder.getContext().authentication
         // Récupérer le nom d'utilisateur à partir de l'objet Principal
@@ -53,21 +57,32 @@ class VoeuController (val voeuDao: VoeuDao,val etudiantService: EtudiantService)
         val user = etudiantService.getUser(identifiant)
         val voeus = this.voeuDao.findByUtilisateur_Id(user?.id!!)
 
-        val nouvelleVoeu = Voeu(null, voeus.size+1, user!!, null)
-        model.addAttribute("nouvelleVoeu", nouvelleVoeu)
+        val resultatRecherche= this.formationService.search(laFormation,leLieu,pageRequest)
+        model.addAttribute("pageFormation",resultatRecherche)
+
         return "etudiant/voeu/create"
     }
 
     @PostMapping("/etudiant/voeu")
-    fun store(@ModelAttribute nouvelleVoeu: Voeu, redirectAttributes: RedirectAttributes): String {
+    fun store(@RequestParam idFormation:Long, redirectAttributes: RedirectAttributes): String {
+        // Récupérer l'objet Principal
+        val authentication: Authentication = SecurityContextHolder.getContext().authentication
+        // Récupérer le nom d'utilisateur à partir de l'objet Principal
+        val identifiant: String = authentication.getName()
+        val user = etudiantService.getUser(identifiant)
+        val voeus = this.voeuDao.findByUtilisateur_Id(user?.id!!)
+        val formation = formationService.formationDao.findById(idFormation).orElseThrow()
+        val nouvelleVoeu = Voeu(null, voeus.size+1, user!!, formation)
         val savedVoeu = this.voeuDao.save(nouvelleVoeu)
+
         redirectAttributes.addFlashAttribute("msgSuccess", "Enregistrement du voeu N°${savedVoeu.numOrdre} réussi")
         return "redirect:/etudiant/voeu"
     }
 
     @GetMapping("/etudiant/voeu/{id}/edit")
-    fun edit(@PathVariable id: Long, model: Model): String {
+    fun edit(@PathVariable id: Long,@RequestParam lieu:String,@RequestParam formation:String, model: Model): String {
         val voeu = this.voeuDao.findById(id).orElseThrow()
+
         model.addAttribute("id", id)
         return "etudiant/voeu/edit"
     }
