@@ -23,6 +23,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6">
+                        <input type="hidden" name="id" th:value="${id}">
                         <button class="btn btn-primary">Rechercher</button>
                     </div>
                 </div>
@@ -50,9 +51,10 @@
                 <li th:each="uneFormation : ${pageFormation}" class="list-group-item p-2 mb-1">
                     <h3 th:text="${' ' + uneFormation.etablissement.nom + ' (' + uneFormation.etablissement.commune + ')'}"></h3>
                     <h4 th:text="${uneFormation.filliere}"></h4>
-                    <form action="/etudiant/voeu" method="post">
+                    <form action="/etudiant/voeu/update" method="post">
+                        <input type="hidden" name="idVoeu" th:value="${id}">
                         <input type="hidden" name="idFormation" th:value="${uneFormation.id}">
-                        <button class="btn btn-primary">Ajouter comme voeu</button>
+                        <button class="btn btn-primary">Modifier le voeu</button>
                     </form>
                 </li>
             </ul>
@@ -63,13 +65,13 @@
             <nav aria-label="Page navigation">
                 <ul class="pagination">
                     <li th:if="${pageFormation.hasPrevious()}" class="page-item">
-                        <a class="page-link" th:href="@{'/etudiant/voeu/create?page=' + ${pageFormation.previousPageable().pageNumber}+ + '&size=' + ${pageFormation.previousPageable().pageSize}+'lieu='+${lieu}+'&fompation='+${formation}}">Précédente</a>
+                        <a class="page-link" th:href="@{'/etudiant/voeu/create?page=' + ${pageFormation.previousPageable().pageNumber}+ + '&size=' + ${pageFormation.previousPageable().pageSize}+'lieu='+${lieu}+'&fompation='+${formation}+'&id='+${id}}">Précédente</a>
                     </li>
                     <li class="page-item disabled">
                         <span class="page-link">Page [[${pageFormation.number + 1}]] sur [[${pageFormation.totalPages}]]</span>
                     </li>
                     <li th:if="${pageFormation.hasNext()}" class="page-item">
-                        <a class="page-link" th:href="@{'/etudiant/voeu/create?lieu='+${lieu}+'&fompation='+${formation}+'&page=' + ${pageFormation.nextPageable().pageNumber} + '&size=' + ${pageFormation.nextPageable().pageSize}}"> Suivante </a>
+                        <a class="page-link" th:href="@{'/etudiant/voeu/create?lieu='+${lieu}+'&fompation='+${formation}+'&page=' + ${pageFormation.nextPageable().pageNumber} + '&size=' + ${pageFormation.nextPageable().pageSize}+'&id='+${id}}"> Suivante </a>
                     </li>
                 </ul>
             </nav>
