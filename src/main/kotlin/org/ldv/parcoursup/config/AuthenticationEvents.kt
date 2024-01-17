@@ -16,14 +16,14 @@ class AuthenticationEvents (val infoLogService: InfoLogService,val etudiantServi
     fun onSuccess(success: AuthenticationSuccessEvent?) {
       val utilisateur=etudiantService.getUser(success!!.authentication.name)!!
 
-      infoLogService.saveLog(utilisateur=utilisateur, action = "authentification réussie")
+      infoLogService.saveLog(utilisateur=utilisateur, action = "Authentification réussie")
     }
 
     @EventListener
     fun onFailure(failures: AbstractAuthenticationFailureEvent?) {
         val utilisateur=etudiantService.getUser(failures!!.authentication.name)!!
 
-        infoLogService.saveLog(utilisateur=utilisateur, action = "authentification échec")
+        infoLogService.saveLog(utilisateur=utilisateur, action = "Authentification échec")
     }
 
 }

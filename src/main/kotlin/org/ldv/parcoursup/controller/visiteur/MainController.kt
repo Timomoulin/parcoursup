@@ -162,7 +162,7 @@ class MainController(val infoLogService: InfoLogService,val utilisateurDao: Util
 
         // Vérification de la complexité du mot de passe
         if (!passwordREGEX.matcher(passwordForm.nouveauMpd).matches()) {
-            erreurs.add("Le mot de passe doit contenir un nombre, une lettre minuscule, une lettre majuscule, au moins un caractère spécial (@#\\$%^&+=) et une longueur d'au moins 8 caractères")
+            erreurs.add("Le mot de passe doit contenir un nombre, une lettre minuscule, une lettre majuscule, au moins un caractère spécial (@#\$%^&+=) et une longueur d'au moins 8 caractères")
         }
 
         // Vérification si l'adresse email est déjà utilisée
