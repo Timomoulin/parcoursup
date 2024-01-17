@@ -1,5 +1,5 @@
 insert into role (nom) values ('admin');
-insert into role (nom) values ('joueur');
+insert into role (nom) values ('etudiant');
 insert into utilisateur ( email, mdp,est_victime) values ('admin@email.com','$2a$10$MJn5SDUCgsm3XEyvELGQI.lcCzCXtxhA8hunr9jX9yvDd6/FkjxYO',false);
 -- mdp = pacourSup2023=super
 insert into utilisateur (est_victime, mdp, nom, num_dossier, prenom) values (false,'$2y$10$DZsKQfsp4gfnmG2z.FTLRejYSaoZlBt7wOoEeuafqcHa4yAItc1c2','vigna','050489','edith'),(false,'$2y$10$DZsKQfsp4gfnmG2z.FTLRejYSaoZlBt7wOoEeuafqcHa4yAItc1c2','milesi','15892','audrey'),(false,'$2y$10$DZsKQfsp4gfnmG2z.FTLRejYSaoZlBt7wOoEeuafqcHa4yAItc1c2','hourdeaux','58924','laurence'),(false,'$2y$10$DZsKQfsp4gfnmG2z.FTLRejYSaoZlBt7wOoEeuafqcHa4yAItc1c2','sequier','81547','catherine'),(false,'$2y$10$Hl/YRWK8.WsgLaoFPqSfB.JPHcRSsEzK1U3GCeC.lmUyS/kmDlTQS','bendib','84651','bahija'),(false,'$2y$10$DZsKQfsp4gfnmG2z.FTLRejYSaoZlBt7wOoEeuafqcHa4yAItc1c2','jules','87241','laurent'),(false,'$2y$10$DZsKQfsp4gfnmG2z.FTLRejYSaoZlBt7wOoEeuafqcHa4yAItc1c2','guillien','62456','yann'),(false,'$2y$10$DZsKQfsp4gfnmG2z.FTLRejYSaoZlBt7wOoEeuafqcHa4yAItc1c2','moulin','62456','timothée');

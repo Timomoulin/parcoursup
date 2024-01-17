@@ -31,6 +31,20 @@ class VoeuController (val formationService: FormationService,val voeuDao: VoeuDa
         return "etudiant/voeu/index"
     }
 
+    @GetMapping("/etudiant/voeu/modif")
+    fun postModif(model: Model): String {
+        // Récupérer l'objet Principal
+        val authentication: Authentication = SecurityContextHolder.getContext().authentication
+        // Récupérer le nom d'utilisateur à partir de l'objet Principal
+        val identifiant: String = authentication.getName()
+        val user = etudiantService.getUser(identifiant)
+
+        val voeus = this.voeuDao.findByUtilisateur_Id(user?.id!!)
+        model.addAttribute("user",user)
+        model.addAttribute("voeux", voeus)
+        return "etudiant/voeu/postUpdate"
+    }
+
     @GetMapping("/etudiant/voeu/{id}")
     fun show(@PathVariable id: Long, model: Model): String {
         // Récupérer l'objet Principal
@@ -55,9 +69,10 @@ class VoeuController (val formationService: FormationService,val voeuDao: VoeuDa
         @RequestParam(defaultValue = "10") size: Int = 20,
         model: Model
     ): String {
-        val laFormation = formation ?: ""
-        val leLieu = lieu ?: ""
-
+        var laFormation = formation ?: ""
+        var leLieu = lieu ?: ""
+        laFormation= laFormation.trim()
+        leLieu=leLieu.trim()
         // Récupérer l'objet Principal
         val authentication: Authentication = SecurityContextHolder.getContext().authentication
         // Récupérer le nom d'utilisateur à partir de l'objet Principal
@@ -90,17 +105,19 @@ class VoeuController (val formationService: FormationService,val voeuDao: VoeuDa
         return "redirect:/etudiant/voeu"
     }
 
-    @GetMapping("/etudiant/voeu/{id}/edit")
-    fun edit(@PathVariable id:Long ,
+    @GetMapping("/etudiant/voeu/edit")
+    fun edit(@RequestParam id:Long ,
              @RequestParam formation: String = " ",
              @RequestParam lieu: String = " ",
              @RequestParam(defaultValue = "0") page: Int = 0,
              @RequestParam(defaultValue = "10") size: Int = 20,
              model: Model): String {
         val voeu = this.voeuDao.findById(id).orElseThrow()
-        val laFormation = formation ?: ""
-        val leLieu = lieu ?: ""
 
+        var laFormation = formation ?: ""
+        var leLieu = lieu ?: ""
+        laFormation= laFormation.trim()
+        leLieu=leLieu.trim()
         // Récupérer l'objet Principal
         val authentication: Authentication = SecurityContextHolder.getContext().authentication
         // Récupérer le nom d'utilisateur à partir de l'objet Principal
@@ -133,7 +150,7 @@ class VoeuController (val formationService: FormationService,val voeuDao: VoeuDa
 
         val savedVoeu = this.voeuDao.save(voeu)
         redirectAttributes.addFlashAttribute("msgSuccess", "Modification du voeu N°${savedVoeu.numOrdre} réussie")
-        return "redirect:/etudiant/voeu"
+        return "redirect:/etudiant/voeu/modif"
     }
 
     @PostMapping("/etudiant/voeu/delete")

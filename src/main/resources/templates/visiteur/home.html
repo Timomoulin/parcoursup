@@ -12,8 +12,15 @@
     <main class="container">
         <section class="jumbotron text-center">
             <div class="container">
-                <h1 class="display-4">Bienvenue dans votre jeu de rôle!</h1>
-                <p class="lead">Préparez-vous pour l'aventure et le combat.</p>
+                <h1 class="display-4">Bienvenue sur ParcourSup !</h1>
+                <p class="lead text-bg-danger">Attention ! Parcoursup a été piraté. Regardez la vidéo suivante : </p>
+                <video autoplay controls>
+                    <source th:src="@{/video/video2.mp4}" type="video/mp4" />
+                    <p>
+                        Votre navigateur ne prend pas en charge les vidéos HTML5. Voici
+                        <a th:href="@{/video/video2.mp4}">un lien pour télécharger la vidéo</a>.
+                    </p>
+                </video>
 
             </div>
         </section>

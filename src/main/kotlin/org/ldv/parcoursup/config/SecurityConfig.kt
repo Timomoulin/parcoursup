@@ -58,11 +58,11 @@ class SecurityConfig {
             .authorizeHttpRequests { auth ->
                 auth
                     // Autoriser l'accès public à certaines URL
-                    .requestMatchers("/recupmdp","/h2-console/**","/accueil", "/inscription", "/webjars/**", "/login", "/css/**", "/js/**", "/img/**", "/favicon.ico").permitAll()
+                    .requestMatchers("/video/**","/","/recupmdp","/h2-console/**","/accueil", "/inscription", "/webjars/**", "/login", "/css/**", "/js/**", "/img/**", "/favicon.ico").permitAll()
                     // Autoriser l'accès pour les utilisateurs avec le rôle "admin" à /admin/**
                     .requestMatchers("/admin/**").hasAuthority("admin")
                     // Autoriser l'accès pour les utilisateurs avec le rôle "joueur" à /joueur/**
-                    .requestMatchers("/joueur/**").hasAuthority("joueur")
+                    .requestMatchers("/etudiant/**").hasAnyAuthority("etudiant","admin")
                     // Toutes les autres requêtes doivent être authentifiées
                     .anyRequest().authenticated()
             }
