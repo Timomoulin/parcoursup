@@ -11,14 +11,17 @@
     <main class="container">
         <div class="row">
             <form action="/etudiant/voeu/edit" method="get">
-                <div class="row mb-3">
+                <div class="row my-3">
                     <div class="col-md-6">
                         <label for="formation" class="form-label">Formation :</label>
-                        <input th:value="${formation}" class="form-control" id="formation" name="formation" type="text">
+                        <div id="aideFormation" class="form-text">Exemple : BTS Négociation et digitalisation de la Relation Client</div>
+                        <input aria-describedby="aideFormation" th:value="${formation}" class="form-control" id="formation" name="formation" type="text">
                     </div>
                     <div class="col-md-6">
-                        <label for="lieu" class="form-label">Lieu :</label>
-                        <input th:value="${lieu}" class="form-control" id="lieu" name="lieu" type="text">
+                        <label for="lieu" class="form-label">Lieu (Séparer les lieux par une ,) :</label>
+                        <div id="aideLieu" class="form-text">Exemple : Université de Caen, Normandie, Caen</div>
+                        <input aria-describedby="aideLieu" th:value="${lieu}" class="form-control" id="lieu" name="lieu" type="text">
+
                     </div>
                 </div>
                 <div class="row">

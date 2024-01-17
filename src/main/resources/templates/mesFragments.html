@@ -29,6 +29,9 @@
                     <a class="nav-link"  th:href="@{'/etudiant/voeu'}">Mes Vœux</a>
                 </li>
                 <li  sec:authorize="hasAnyAuthority('admin','etudiant')" class="nav-item">
+                    <a class="nav-link"  th:href="@{'/etudiant/log'}">Mes Logs</a>
+                </li>
+                <li  sec:authorize="hasAnyAuthority('admin','etudiant')" class="nav-item">
                     <a class="nav-link" href="/recupmdp">Modification du mot de passe</a>
                 </li>
 

@@ -6,6 +6,7 @@ import org.ldv.parcoursup.model.entity.Utilisateur
 import org.ldv.parcoursup.model.entity.Voeu
 import org.ldv.parcoursup.service.EtudiantService
 import org.ldv.parcoursup.service.FormationService
+import org.ldv.parcoursup.service.InfoLogService
 import org.springframework.data.domain.PageRequest
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContextHolder
@@ -16,7 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import java.awt.print.Pageable
 
 @Controller
-class VoeuController (val formationService: FormationService,val voeuDao: VoeuDao,val voeuService: EtudiantService,val etudiantService: EtudiantService) {
+class VoeuController (val infoLogService: InfoLogService,val formationService: FormationService,val voeuDao: VoeuDao,val voeuService: EtudiantService,val etudiantService: EtudiantService) {
     @GetMapping("/etudiant/voeu")
     fun index(model: Model): String {
         // Récupérer l'objet Principal
@@ -100,7 +101,7 @@ class VoeuController (val formationService: FormationService,val voeuDao: VoeuDa
         val formation = formationService.formationDao.findById(idFormation).orElseThrow()
         val nouvelleVoeu = Voeu(null, voeus.size+1, user!!, formation)
         val savedVoeu = this.voeuDao.save(nouvelleVoeu)
-
+        infoLogService.saveLog(user,"Ajout d'un nouveau voeu (voeu n°${nouvelleVoeu.numOrdre}", detail ="Formation = ${savedVoeu.formation!!.filliere}, Lieu = ${savedVoeu!!.formation!!.etablissement!!.nom} (${savedVoeu.formation!!.etablissement!!.commune})")
         redirectAttributes.addFlashAttribute("msgSuccess", "Enregistrement du voeu N°${savedVoeu.numOrdre} réussi")
         return "redirect:/etudiant/voeu"
     }
@@ -145,10 +146,12 @@ class VoeuController (val formationService: FormationService,val voeuDao: VoeuDa
         val voeus = this.voeuDao.findByUtilisateur_Id(user?.id!!)
 
         val formation = formationService.formationDao.findById(idFormation).orElseThrow()
-        val voeu = voeus.find { it.id==idVoeu  }
+        val exVoeu = voeus.find { it.id==idVoeu  }
+        var voeu= exVoeu
         voeu!!.formation = formation
 
         val savedVoeu = this.voeuDao.save(voeu)
+        infoLogService.saveLog(user,"Changement du voeu n°${voeu.numOrdre}", detail ="Nouvelle formation = ${voeu.formation!!.filliere}, Nouveau lieu = ${voeu!!.formation!!.etablissement!!.nom} (${voeu.formation!!.etablissement!!.commune})" )
         redirectAttributes.addFlashAttribute("msgSuccess", "Modification du voeu N°${savedVoeu.numOrdre} réussie")
         return "redirect:/etudiant/voeu/modif"
     }
@@ -165,6 +168,7 @@ class VoeuController (val formationService: FormationService,val voeuDao: VoeuDa
 
         val voeu = voeus.find { it.id==id }
         this.voeuDao.delete(voeu!!)
+        infoLogService.saveLog(user,"Suppression du voeu n°${voeu.numOrdre}")
         redirectAttributes.addFlashAttribute("msgSuccess", "Suppression du voeu N°${voeu.numOrdre} réussie")
         return "redirect:/etudiant/voeu"
     }

@@ -1,7 +1,10 @@
 package org.ldv.parcoursup.config
 
+import org.springframework.context.ApplicationEventPublisher
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.security.authentication.AuthenticationEventPublisher
+import org.springframework.security.authentication.DefaultAuthenticationEventPublisher
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer
 import org.springframework.security.config.annotation.web.configurers.FormLoginConfigurer
@@ -13,6 +16,12 @@ import org.springframework.security.web.SecurityFilterChain
 
 @Configuration
 class SecurityConfig {
+
+    @Bean
+    fun authenticationEventPublisher
+                (applicationEventPublisher: ApplicationEventPublisher?): AuthenticationEventPublisher {
+        return DefaultAuthenticationEventPublisher(applicationEventPublisher)
+    }
     /**
      * Cette méthode fournit un bean `PasswordEncoder` pour l'application.
      *

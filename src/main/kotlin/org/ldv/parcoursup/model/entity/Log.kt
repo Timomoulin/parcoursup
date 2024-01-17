@@ -12,6 +12,7 @@ class Log(
     var logDateTime: LocalDateTime,
     var action: String,
     var ip:String,
+    var detail:String="",
 
     @ManyToOne
     @JoinColumn(name = "utilisateur_id")
