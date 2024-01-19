@@ -1,7 +1,10 @@
 package org.ldv.parcoursup.config
 
+import org.springframework.context.ApplicationEventPublisher
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.security.authentication.AuthenticationEventPublisher
+import org.springframework.security.authentication.DefaultAuthenticationEventPublisher
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer
 import org.springframework.security.config.annotation.web.configurers.FormLoginConfigurer
@@ -13,6 +16,12 @@ import org.springframework.security.web.SecurityFilterChain
 
 @Configuration
 class SecurityConfig {
+
+    @Bean
+    fun authenticationEventPublisher
+                (applicationEventPublisher: ApplicationEventPublisher?): AuthenticationEventPublisher {
+        return DefaultAuthenticationEventPublisher(applicationEventPublisher)
+    }
     /**
      * Cette méthode fournit un bean `PasswordEncoder` pour l'application.
      *
@@ -58,11 +67,11 @@ class SecurityConfig {
             .authorizeHttpRequests { auth ->
                 auth
                     // Autoriser l'accès public à certaines URL
-                    .requestMatchers("/recupmdp","/h2-console/**","/accueil", "/inscription", "/webjars/**", "/login", "/css/**", "/js/**", "/img/**", "/favicon.ico").permitAll()
+                    .requestMatchers("/video/**","/","/recupmdp","/h2-console/**","/accueil", "/inscription", "/webjars/**", "/login", "/css/**", "/js/**", "/img/**", "/favicon.ico").permitAll()
                     // Autoriser l'accès pour les utilisateurs avec le rôle "admin" à /admin/**
                     .requestMatchers("/admin/**").hasAuthority("admin")
                     // Autoriser l'accès pour les utilisateurs avec le rôle "joueur" à /joueur/**
-                    .requestMatchers("/joueur/**").hasAuthority("joueur")
+                    .requestMatchers("/etudiant/**").hasAnyAuthority("etudiant","admin")
                     // Toutes les autres requêtes doivent être authentifiées
                     .anyRequest().authenticated()
             }

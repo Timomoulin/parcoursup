@@ -5,6 +5,7 @@ import org.ldv.parcoursup.model.dao.RoleDao
 import org.ldv.parcoursup.model.dao.UtilisateurDao
 import org.ldv.parcoursup.model.entity.Utilisateur
 import org.ldv.parcoursup.service.EtudiantService
+import org.ldv.parcoursup.service.InfoLogService
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
@@ -19,7 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import java.util.regex.Pattern
 
 @Controller
-class MainController(val utilisateurDao: UtilisateurDao, val roleDao: RoleDao, val encoder: PasswordEncoder, val etudiantService: EtudiantService) {
+class MainController(val infoLogService: InfoLogService,val utilisateurDao: UtilisateurDao, val roleDao: RoleDao, val encoder: PasswordEncoder, val etudiantService: EtudiantService) {
     /**
      * Méthode pour afficher la page de connexion.
      *
@@ -161,7 +162,7 @@ class MainController(val utilisateurDao: UtilisateurDao, val roleDao: RoleDao, v
 
         // Vérification de la complexité du mot de passe
         if (!passwordREGEX.matcher(passwordForm.nouveauMpd).matches()) {
-            erreurs.add("Le mot de passe doit contenir un nombre, une lettre minuscule, une lettre majuscule, au moins un caractère spécial (@#\\$%^&+=) et une longueur d'au moins 8 caractères")
+            erreurs.add("Le mot de passe doit contenir un nombre, une lettre minuscule, une lettre majuscule, au moins un caractère spécial (@#\$%^&+=) et une longueur d'au moins 8 caractères")
         }
 
         // Vérification si l'adresse email est déjà utilisée
@@ -172,12 +173,17 @@ class MainController(val utilisateurDao: UtilisateurDao, val roleDao: RoleDao, v
         if (erreurs.size != 0) {
             model.addAttribute("erreurs", erreurs)
             model.addAttribute("passwordForm", passwordForm)
+            if(utilisateur!=null){
+                infoLogService.saveLog(utilisateur,"Changement de mdp echec")
+            }
             return "/visiteur/password"
         } else {
+
             // Si aucune erreur, encoder le mot de passe, sauvegarder l'utilisateur,
             // et rediriger vers la page de connexion avec un message de succès
             utilisateur!!.mdp = this.encoder.encode(passwordForm.nouveauMpd)
             val nouvelleUtilisateur = utilisateurDao.save(utilisateur!!)
+            infoLogService.saveLog(utilisateur,"Changement de mdp réussie")
             redirectAttributes.addFlashAttribute("msgSuccess", "Changement du mot de passe réussie")
             return "redirect:/login"
         }

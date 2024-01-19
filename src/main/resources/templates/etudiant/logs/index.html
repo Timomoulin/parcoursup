@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head th:replace="mesFragments :: fragHead">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="min-vh-100">
+    <nav th:replace="mesFragments :: fragNav"></nav>
+    <div th:replace="mesFragments:: fragFlashSuccess"></div>
+    <main class="container">
+        <h1>Mes Logs</h1>
+
+        <table class="table table-striped">
+
+            <thead>
+            <tr>
+                <th>Date</th>
+                <th>IP</th>
+                <th>Action</th>
+
+                <th>Detail</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="unLog : ${logs}">
+                <td th:text="${#temporals.format(unLog.getLogDateTime(), 'dd-MM-yyyy HH:mm:ss')}"></td>
+                <td th:text="${unLog.getIp()}"></td>
+                <td th:text="${unLog.getAction()}"></td>
+                <td th:text="${unLog.detail}"></td>
+
+            </tr>
+            </tbody>
+
+        </table>
+
+    </main>
+</div>
+<footer th:replace="mesFragments :: fragFooter"></footer>
+</body>
+</html>

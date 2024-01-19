@@ -7,30 +7,75 @@
 <body>
 <div class="min-vh-100">
     <nav th:replace="mesFragments :: fragNav"></nav>
+    <div th:replace="mesFragments:: fragFlashSuccess"></div>
     <main class="container">
-<div class="row">
+        <div class="row">
+            <h1>Rechercher une formation</h1>
             <form action="/etudiant/voeu/create" method="get">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="formation" class="form-label">Rechercher une formation, une filière… </label>
+                        <div id="aideFormation" class="form-text">Exemple : BTS Négociation et digitalisation de la Relation Client</div>
+                        <input th:value="${formation}" class="form-control" id="formation" name="formation" type="text">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="lieu" class="form-label">Zone géographique (Séparer les lieux par une ,) </label>
+                        <div id="aideLieu" class="form-text">Exemple : Université de Caen, Normandie, Caen</div>
+                        <input th:value="${lieu}" class="form-control" id="lieu" name="lieu" type="text">
+                    </div>
+                </div>
                 <div class="row">
-                <div class="col-6">
-                <label for="formation">Fomation :</label>
-                <input class="form-control" id="formation" name="formation" type="text">
-                </div>
-                </div>
-                <div class="col-6">
-                    <label for="lieu">Lieu :</label>
-                    <input class="form-control" id="lieu" name="lieu" type="text">
-                </div>
-                <div class="row">
-                    <button class="btn btn-primary">Rechercher</button>
+                    <div class="col-md-6">
+                        <button class="btn btn-primary">Rechercher</button>
+                    </div>
                 </div>
             </form>
-</div>
-        <div class="row">
+        </div>
+
+        <div class="row mt-4">
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li th:if="${pageFormation.hasPrevious()}" class="page-item">
+                        <a class="page-link" th:href="@{'/etudiant/voeu/create?page=' + ${pageFormation.previousPageable().pageNumber} + '&size=' + ${pageFormation.previousPageable().pageSize}+'&lieu='+${lieu}+'&formation='+${formation}}">Précédente</a>
+                    </li>
+                    <li class="page-item disabled">
+                        <span class="page-link">Page [[${pageFormation.number + 1}]] sur [[${pageFormation.totalPages}]]</span>
+                    </li>
+                    <li th:if="${pageFormation.hasNext()}" class="page-item">
+                        <a class="page-link" th:href="@{'/etudiant/voeu/create?lieu='+${lieu}+'&formation='+${formation}+'&page=' + ${pageFormation.nextPageable().pageNumber} + '&size=' + ${pageFormation.nextPageable().pageSize}}"> Suivante </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="row mt-4">
             <ul class="list-group">
-                <li th:each="uneFormation : ${pageFormation.values}" class="list-group-item">
-                    <h3 th:text="${uneFormation.filliere +' '+uneFormation.etablissement.nom+' '+uneFormation.etablisement.commune}"></h3>
+                <li th:each="uneFormation : ${pageFormation}" class="list-group-item p-2 mb-1">
+                    <h3 th:text="${' ' + uneFormation.etablissement.nom + ' (' + uneFormation.etablissement.commune + ')'}"></h3>
+                    <h4 th:text="${uneFormation.filliere}"></h4>
+                    <form action="/etudiant/voeu" method="post">
+                        <input type="hidden" name="idFormation" th:value="${uneFormation.id}">
+                        <button class="btn btn-primary">Ajouter comme voeu</button>
+                    </form>
                 </li>
             </ul>
+        </div>
+
+        <!-- Ajout de la pagination -->
+        <div class="row mt-4">
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li th:if="${pageFormation.hasPrevious()}" class="page-item">
+                        <a class="page-link" th:href="@{'/etudiant/voeu/create?page=' + ${pageFormation.previousPageable().pageNumber}+ + '&size=' + ${pageFormation.previousPageable().pageSize}+'lieu='+${lieu}+'&fompation='+${formation}}">Précédente</a>
+                    </li>
+                    <li class="page-item disabled">
+                        <span class="page-link">Page [[${pageFormation.number + 1}]] sur [[${pageFormation.totalPages}]]</span>
+                    </li>
+                    <li th:if="${pageFormation.hasNext()}" class="page-item">
+                        <a class="page-link" th:href="@{'/etudiant/voeu/create?lieu='+${lieu}+'&fompation='+${formation}+'&page=' + ${pageFormation.nextPageable().pageNumber} + '&size=' + ${pageFormation.nextPageable().pageSize}}"> Suivante </a>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </main>
 </div>

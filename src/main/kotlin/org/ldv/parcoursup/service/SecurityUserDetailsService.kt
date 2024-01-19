@@ -19,7 +19,8 @@ import org.springframework.transaction.annotation.Transactional
  */
 @Service
 class SecurityUserDetailsService constructor(
-    val utilisateurDao: UtilisateurDao
+    val utilisateurDao: UtilisateurDao,
+    val infoLogService: InfoLogService
 ) : UserDetailsService {
 
     /***
@@ -48,5 +49,9 @@ class SecurityUserDetailsService constructor(
 
         // Retourner un objet User (implémentant UserDetails) avec les détails de l'utilisateur
         return User(utilisateur.numDossier ?: utilisateur.email, utilisateur.mdp, permissions)
+
+
     }
+
+
 }

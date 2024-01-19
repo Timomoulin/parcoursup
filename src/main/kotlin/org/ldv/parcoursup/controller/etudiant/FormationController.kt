@@ -2,6 +2,7 @@ package org.ldv.parcoursup.controller.etudiant
 
 import org.ldv.parcoursup.model.dao.FormationDao
 import org.ldv.parcoursup.model.entity.Formation
+import org.ldv.parcoursup.service.FormationService
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
