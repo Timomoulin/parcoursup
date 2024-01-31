@@ -7,5 +7,6 @@ interface LogDao : JpaRepository<Log, Long> {
 
 
     fun findByUtilisateur_IdOrderByLogDateTimeAsc(id: Long): List<Log>
+    fun findByUtilisateur_IdOrderByLogDateTimeDesc(id: Long): List<Log>
 
 }

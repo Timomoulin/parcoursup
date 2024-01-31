@@ -10,7 +10,7 @@ import java.time.LocalDateTime
 @Service
 class InfoLogService (val logDao: LogDao,val request: HttpServletRequest) {
      fun getLogByUser(id:Long):List<Log>{
-         return  this.logDao.findByUtilisateur_IdOrderByLogDateTimeAsc(id)
+         return  this.logDao.findByUtilisateur_IdOrderByLogDateTimeDesc(id)
      }
 
     fun saveLog(utilisateur: Utilisateur, action:String,detail:String=""){
