@@ -1,0 +1,11 @@
+.bg-blue{
+    background-color: #000091; !important;
+}
+
+text-blue{
+    color:#000091; !important;
+}
+
+nav li:hover{
+    background-color: lightgray;
+}

@@ -6,32 +6,44 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Parcoursup</title>
+
     <!-- Bootstrap -->
     <link href="/css/bootstrap.css" rel="stylesheet"  crossorigin="anonymous">
     <script src="/js/bootstrap.bundle.js"  crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-<nav th:fragment="fragNav" class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">ParcourSup</a>
+<nav th:fragment="fragNav" class="">
+    <header>
+    <div class="container">
+        <div class="row">
+            <a class="my-2" href="/">
+                <img src="/img/brand.JPG" alt="">
+            </a>
+        </div>
+    </div>
+    </header>
+    <div class="navbar  navbar-expand-lg border-top border-bottom py-0 " >
+    <div class="container">
+
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
                 aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/accueil">Accueil</a>
+                <li class="nav-item mx-2 py-1">
+                    <a class="nav-link" aria-current="page" href="/accueil">Accueil</a>
                 </li>
 
 
-                <li  sec:authorize="hasAnyAuthority('admin','etudiant')" class="nav-item">
+                <li  sec:authorize="hasAnyAuthority('admin','etudiant')" class="nav-item mx-2 py-1">
                     <a class="nav-link"  th:href="@{'/etudiant/voeu'}">Mes Vœux</a>
                 </li>
-                <li  sec:authorize="hasAnyAuthority('admin','etudiant')" class="nav-item">
+                <li  sec:authorize="hasAnyAuthority('admin','etudiant')" class="nav-item mx-2 py-1">
                     <a class="nav-link"  th:href="@{'/etudiant/log'}">Mes Logs</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item mx-2 py-1">
                     <a class="nav-link" href="/recupmdp">Modification du mot de passe</a>
                 </li>
 
@@ -45,23 +57,24 @@
 <!--                        <li><a class="dropdown-item" th:href="@{'/joueur/personnage'}">Mes personnages</a></li>-->
 <!--                    </ul>-->
 <!--                </li>-->
-                <li sec:authorize="isAnonymous()" class="nav-item">
-                    <a class="nav-link" href="/login">Login</a>
+                <li sec:authorize="isAnonymous()" class="nav-item mx-2 py-1">
+                    <a class="nav-link" href="/login">Me connecter</a>
                 </li>
 
-                <li sec:authorize="isAuthenticated()" class="nav-item">
+                <li sec:authorize="isAuthenticated()" class="nav-item mx-2 py-1">
                     <form action="/logout" method="post">
                         <button class="nav-link">Logout</button>
                     </form>
                 </li>
 
             </ul>
-            <span class="nav-item" sec:authorize="isAuthenticated()">
+            <span class="nav-item mx-2" sec:authorize="isAuthenticated()">
                 <p class="nav-link"> Bienvenue <span sec:authentication="name"></span>
                     <span sec:authentication="principal.authorities"></span></p>
 
             </span>
         </div>
+    </div>
     </div>
 </nav>
 
@@ -81,7 +94,7 @@
 
 <div th:fragment="fragFooter">
     <footer class="container d-flex justify-content-center mt-5 mb-3 text-muted">
-        <p>ParcourSup</p>
+        <img src="/img/footer.JPG" alt="">
     </footer>
 </body>
 </html>

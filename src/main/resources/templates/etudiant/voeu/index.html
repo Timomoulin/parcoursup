@@ -29,15 +29,13 @@
                     <div th:text="${unVoeu.formation.filliere}"></div>
                 </td>
                 <td>Dossier complet</td>
-                <td>Clôture des dossiers le 19/01 à 12h</td>
+                <td>Clôture des dossiers le 01/02 à 17h</td>
                 <td>
                     <div class="d-flex">
-                    <a th:href="@{'/etudiant/voeu/edit?id='+${unVoeu.id}}" class="btn btn-warning">
+                    <a th:href="@{'/etudiant/voeu/edit?id='+${unVoeu.id}}" class="btn btn-primary bg-blue">
                         Modifier
                     </a>
-                    <a th:href="@{'/etudiant/voeu/'+${unVoeu.id}}" class="btn btn-primary">
-                        Consulter
-                    </a>
+
                     <div>
                         <form th:action="@{'/etudiant/voeu/delete'}" method="post">
                             <input type="hidden" name="id" th:value="${unVoeu.id}">
