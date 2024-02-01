@@ -137,7 +137,7 @@ class MainController(val infoLogService: InfoLogService,val utilisateurDao: Util
         // Liste pour stocker les messages d'erreur potentiels
         var erreurs: MutableList<String> = mutableListOf()
 
-        if(passwordForm.codeSecret!=utilisateur?.codeSecret){
+        if(passwordForm.codeSecret.lowercase()!=utilisateur?.codeSecret?.lowercase()){
             erreurs.add("Le code secret n'est pas bon")
 
         }
